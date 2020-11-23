@@ -5,18 +5,30 @@ const serverless = require('serverless-http');
 const app = express();
 const bodyParser = require('body-parser');
 
+const cors = require("cors");
+
+var corsOptions = {
+    origin: process.env.ORIGIN | "http://localhost:8081"
+};
+
+app.use(cors(corsOptions));
+
 const router = express.Router();
 router.get('/', (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.write('<h1>Hello from Express.js!</h1>');
     res.end();
 });
+
+require("./app/routes/turorial.routes")(app);
+
 router.get('/another', (req, res) => res.json({ route: req.originalUrl }));
 router.post('/', (req, res) => res.json({ postBody: req.body }));
 
 app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router); // path must route to lambda
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
+
 
 // DB Config
 const db = require("./app/models");
