@@ -8,8 +8,12 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 
 var corsOptions = {
-    origin: process.env.ORIGIN | "http://localhost:8081"
+    origin: process.env.EXP_CORS_ORIGIN || "http://localhost:8081"
 };
+
+console.log("PROCESS ENV EXP_CORS_ORIGIN", process.env.EXP_CORS_ORIGIN);
+console.log("PROCESS ENV MONGO_DB_TESTDG", process.env.MONGO_DB_TESTDG);
+console.log("corsOptions", corsOptions);
 
 app.use(cors(corsOptions));
 
