@@ -3,9 +3,8 @@ const Tutorial = db.tutorials;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
-
-    console.log("req.body", req.body)
-        // Validate request
+    
+    // Validate request
     if (!req.body || !req.body.title) {
         res.status(400).send({ message: "Content can not be empty!" });
         return;

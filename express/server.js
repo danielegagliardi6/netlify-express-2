@@ -24,15 +24,18 @@ router.get('/', (req, res) => {
     res.end();
 });
 
-require("./app/routes/turorial.routes")(app);
 
 router.get('/another', (req, res) => res.json({ route: req.originalUrl }));
 router.post('/', (req, res) => res.json({ postBody: req.body }));
 
 app.use(bodyParser.json());
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use('/.netlify/functions/server', router); // path must route to lambda
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
 
+require("./app/routes/turorial.routes")(app);
 
 // DB Config
 const db = require("./app/models");
